@@ -1,0 +1,1 @@
+web: gunicorn tips_proj.wsgi --log-file -
