@@ -17,17 +17,16 @@ class CategoryViewSet(ModelViewSet):
 class QuestionAnswerListCreateAPIView(ListCreateAPIView):
     queryset = QuestionAnswer.objects.all()
     serializer_class = QuestionAnswerSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'question']
 
 
     def get_queryset(self):
-        queryset = self.queryset
-        category = self.request.query_params.get('category')
-        if category:
-            queryset = queryset.filter(category__categoryname=category)
-        search = self.request.query_params.get('search')
-        if search:
-            queryset = queryset.filter(text__icontains=search)
+        queryset = QuestionAnswer.objects.order_by('-importance')
         return queryset
+
+    def perform_create(self, serializer):
+        serializer.save()
 
 class QuestionAnswerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = QuestionAnswer.objects.all()

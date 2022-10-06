@@ -15,5 +15,4 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('questions/', QuestionAnswerListCreateAPIView.as_view),
     path('questions/<int:question_id>', QuestionAnswerRetrieveUpdateDestroyAPIView.as_view),
-
-   ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
